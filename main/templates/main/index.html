@@ -1,0 +1,44 @@
+{% extends 'main/base.html' %} 
+
+
+
+{% block title%} Arshad {%endblock%}
+
+
+
+{% block content%}
+<div class="mt-6 px-6 py-6 bg-gray-200 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Newest Products</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {%for product in products%}
+        <div>
+            <a href="{%  url 'products:detail' product.id %}">
+                <div >
+                    <img src="{{product.image.url}}" class="rounded-t-xl" alt="{{product.name}}">
+                </div>
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="text-2xl">{{product.name}}</h2>
+                    <p class="text-gray-500">Price:{{product.price}}</p>
+                </div>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+<div class="px-6 py-6 mt-6 bg-gray-100 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Categories</h2>
+    <div class="grid grid-cols-3 gap-3">
+        {%for category in categories %}
+             <div>
+            <a href="#">
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="text-2xl">{{ category.name }}</h2>
+                    <p class="m-2 text-gray-500">{{ category.product.count }} items</p>
+                </div>
+            </a>
+        </div>
+        {%endfor%}
+    </div>
+</div>
+{%endblock%}

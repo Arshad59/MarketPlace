@@ -1,0 +1,71 @@
+{%extends 'main/base.html'%}
+
+{%block title %}{{product.name}} {%endblock%}
+
+{% block content%}
+
+<div class="grid grid-cols-5 gap-6">
+    <div class="col-span-3">
+        <img src="{{product.image.url}}" class="rounded-xl">
+    </div>
+    <div class="col-span-2 p-6 bg-gray-200 rounded-xl">
+        <h1 class="mb-6 text-3xl">{{product.name}}</h1>
+        <p class="text-gray-500"><strong>Price:</strong>{{product.price}}</p>
+        <p class="text-gray-500"><strong>Seller:</strong>{{product.created_by}}</p>
+        {%if product.description%}
+            <p class="text-gray-700">
+                <strong class="text-gray-500">Description:</strong><br>
+                {{product.description}}
+            </p>
+        {%endif%}
+ <a href="#" class="inline-block mt-6 px-6 py-6 text-m font-bold bg-teal-500 rounded-xl hover:bg-teal-800">Contact Seller</a>
+        {% if request.user == product.created_by %}
+            <div class="py-6 m-5 border-2 border-slate-400 shadow-xl bg-gray-50 rounded-lg border-collapse">
+            <h2 class="flex justify-center text-black font-semibold m-9">This is your item</h2>
+                <div class="flex justify-evenly space-x-7">
+                    <a href="{%url 'products:edit' product.id %}" class="ml-1 border-2 shadow-md border-teal-800 w-1/2 text-lg py-4 front-semibold flex justify-center bg-teal-500
+                  text-white rounded-lg hover:bg-teal-800 hover:translate-x-2">Edit</a>
+                    
+                  <a href="#" class="border-2 shadow-md border-red-800 mr-10 py-4 w-1/2 flex justify-center text-lg front-semibold bg-red-500
+                  text-white rounded-lg hover:bg-red-800 hover:translate-x-2" onclick="confirm_delete('{{product.id}}');" 
+                  id="delete_button">
+                   Delete </a>
+                 <script>
+                    function confirm_delete(orderno){
+                        var r = confirm("Sure you want to delete?");
+                        if (r == true) {
+                            let a = document.getElementById("delete_button")
+                            a.setAttribute("href","{% url 'dashboard:delete' product.id %}" )
+                        }
+                    }
+                    </script>
+                </div>
+            </div>
+        {% endif %}
+       
+    </div>
+    
+</div>
+
+<div class="mt-6 px-6 py-6 bg-gray-200 rounded-xl">
+    <h2 class="mb-12 text-2xl text-center">Related Products</h2>
+
+    <div class="grid grid-cols-3 gap-3">
+        {%for product in related%}
+        <div>
+            <a href="{%  url 'products:detail' product.id %}">
+                <div >
+                    <img src="{{product.image.url}}" class="rounded-t-xl" alt="{{product.name}}">
+                </div>
+                <div class="p-6 bg-white rounded-b-xl">
+                    <h2 class="text-2xl">{{product.name}}</h2>
+                    <p class="text-gray-500">Price:{{product.price}}</p>
+                </div>
+            </a>
+           
+        </div>
+        {%endfor%}
+    </div>
+</div>
+
+{%endblock%}
