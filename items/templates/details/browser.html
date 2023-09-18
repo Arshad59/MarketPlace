@@ -5,9 +5,34 @@
 
 
 {%block content %}
-<div class="pb-6 grid grid-cols-4 gap-4">
-   <div class="col-span-1">
-    Side bar
+<div class="pb-6 grid grid-cols-4 gap-4 text-black">
+    <div class="col-span-1 bg-gray-50">
+   
+    <form action="{% url 'products:items' %}" method="GET" class="mt-6">
+        <input type="text" class="w-1/2 py-4 px-6 border rounded-xl bg-gray-50" name="query" value="{{ query }}" placeholder="Search">
+
+        <button class="mt-2 py-4 px-8 bg-teal-500 text-white rounded-xl" type="submit">Search</button>
+    </form>
+    <hr class="my-6">
+    <p class="font-semibold">Categories</p>
+    <ul>
+        {%for category in categories %}
+          <li class="py-2 px-2 rounded-xl {%if category.id == category_id %} bg-gray-200 {% endif %}">
+            <a href="{%url 'products:items' %}?query={{query}}&category={{category.id}}">{{category}}</a>
+          </li>
+        {%endfor%}
+    </ul>
+
+    <hr class="my-6">
+
+<p class="font-semibold mb-5">Clear Filters</p>
+
+<ul>
+    <li>
+        <a href="{% url 'products:items'%}" class="mt-2 py-4 px-8 inline-bock bg-yellow-500 text-lg rounded-xl text-white">Reset</a>
+    </li>
+</ul>
+
    </div>
    <div class="col-span-3">
        <div class="grid grid-cols-3 gap-3">

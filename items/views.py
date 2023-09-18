@@ -1,15 +1,25 @@
 from django.shortcuts import render,get_object_or_404,redirect
-from .models import Product
+from .models import *
+from django.db.models import Q
 from django.contrib.auth.decorators import login_required
 from .forms import *
 from dashboard.views import *
 # Create your views here.
 
 def items(request):
+    query = request.GET.get('query','')
     product = Product.objects.filter(is_sold=False).order_by('-created_at',)
-    
+    categories = ProductCategory.objects.all()
+    category_id = request.GET.get('category',0)
+    if query:
+        product = product.filter(Q(name__icontains=query) | Q(description__icontains=query))
+    if category_id:
+        product = product.filter(category_id=category_id)
     return render(request,'details/browser.html',{
-        'products':product
+        'products':product,
+        'query':query,
+        'categories':categories,
+        'category_id':int(category_id)
     })
 
 def product_details(request,pk):
