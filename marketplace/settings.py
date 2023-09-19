@@ -48,6 +48,7 @@ EXTERNAL_APPS = [
     'dashboard',
     'django_browser_reload',
     'items',
+    'contact',
 ]
 TAILWIND_APP_NAME = 'theme'
 INTERNAL_IPS = [

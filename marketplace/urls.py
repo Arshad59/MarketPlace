@@ -25,5 +25,6 @@ urlpatterns = [
     path("accounts/", include("django.contrib.auth.urls")),
     path('product/',include('items.urls')),
     path('dashboard/',include('dashboard.urls')),
+    path('inbox/',include('contact.urls')),
     path("__reload__/", include("django_browser_reload.urls")),
 ]+static(settings.MEDIA_URL,document_root = settings.MEDIA_ROOT)

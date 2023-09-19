@@ -41,9 +41,9 @@
                     </script>
                 </div>
             </div>
-        {% endif %}
-        <a href="#" class="w-1/2 flex justify-center mt-6 ml-40 px-6 py-6 text-m font-bold bg-teal-500 rounded-xl hover:bg-teal-800">Contact Seller</a>
-       
+       {%else%}
+            <a href="{% url 'conversation:conversation' product.id %}" class="w-1/2 flex justify-center mt-6 ml-40 px-6 py-6 text-m font-bold bg-teal-500 rounded-xl hover:bg-teal-800">Contact Seller</a>
+       {% endif %}
     </div>
     
 </div>
